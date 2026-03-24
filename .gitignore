@@ -1,2 +1,16 @@
+# Dependencies
 node_modules/
+
+# Secrets
 .env
+
+# Generated / personal data
+vault/
+chroma/
+
+# Proposal state
+proposals.json
+
+# Python cache
+__pycache__/
+*.pyc
