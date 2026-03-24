@@ -42,3 +42,12 @@ Despite the challenges, data collection remains a critical component of modern b
 *   **Drive informed decision-making:** Data-driven insights are central to overall business strategy, allowing companies to make more confident decisions and outperform competitors in areas like customer acquisition.
 
 The integration of artificial intelligence (AI) and machine learning (ML) further amplifies the power of corporate data collection, enabling more sophisticated analysis and predictive capabilities. However, this also necessitates a commitment to "privacy by design" principles and transparent data practices to balance business needs with consumer expectations.
+
+
+---
+
+## Related notes
+- [[2026-03-24T05-25-34-research-additional-solutions-to-issues-with-data-]] — This note covers the current ramifications of data collection, including privacy, security, ethics, and legal compliance, which directly informs the issues the new note seeks to solve.
+- [[2026-03-24T05-21-00-what-are-common-solutions-and-best-practices-to-ad]] — This note details the ramifications of data collection regarding privacy, security, and ethics, which are the core issues the new note seeks to provide solutions and best practices for.
+
+- [[2026-03-24T05-07-26-research-the-positive-effects-of-data-collection-o]] — Both notes discuss the impact and ramifications of data collection, with the existing note covering corporate aspects like privacy and security which are relevant to the new note's focus on positive effects including enhanced privacy and security measures for consumers.
