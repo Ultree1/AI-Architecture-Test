@@ -1,6 +1,37 @@
 import { Client, GatewayIntentBits } from 'discord.js';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { writeFileSync, mkdirSync, existsSync } from 'fs';
+import { join } from 'path';
 import 'dotenv/config';
+
+function saveToVault(task, content) {
+  const vaultPath = process.env.VAULT_PATH || './vault';
+
+  // Create vault folder if it doesn't exist
+  if (!existsSync(vaultPath)) mkdirSync(vaultPath, { recursive: true });
+
+  // Build a clean filename from the task text + timestamp
+  const date = new Date();
+  const timestamp = date.toISOString().replace(/[:.]/g, '-').slice(0, 19);
+  const slug = task.slice(0, 50).replace(/[^a-z0-9]+/gi, '-').toLowerCase();
+  const filename = `${timestamp}-${slug}.md`;
+
+  // Write a markdown file with metadata header + content
+  const markdown =
+`---
+date: ${date.toISOString()}
+task: "${task}"
+agent: researcher
+---
+
+# ${task}
+
+${content}
+`;
+
+  writeFileSync(join(vaultPath, filename), markdown, 'utf8');
+  return filename;
+}
 
 const discord = new Client({
   intents: [
@@ -12,9 +43,9 @@ const discord = new Client({
 
 const genai = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-// gemini-2.5-flash-lite with Google Search grounding for real web results
+// gemini-2.5-flash with Google Search grounding for real web results
 const researchModel = genai.getGenerativeModel({
-  model: 'gemini-2.5-flash-lite',
+  model: 'gemini-2.5-flash',
   tools: [{ googleSearch: {} }],
 });
 
@@ -36,6 +67,10 @@ Task: ${task}`;
 
     const result = await researchModel.generateContent(researchPrompt);
     const text = result.response.text();
+
+    // Save to vault before posting to Discord
+    const filename = saveToVault(task, text);
+    await logChannel.send(`💾 Saved to vault: \`${filename}\``);
 
     // Post result back in the research channel as a reply
     await msg.reply(text.slice(0, 1999));
